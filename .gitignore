@@ -1,0 +1,10 @@
+
+# Ignore batch scripts
+*.bat
+
+# Ignore system files
+thumbs.db
+desktop.ini
+
+# Ignore vscode settings
+.vscode/
