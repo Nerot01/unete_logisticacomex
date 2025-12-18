@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // Accordion Logic
     const acc = document.getElementsByClassName("accordion-btn");
-    
+
     for (let i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
+        acc[i].addEventListener("click", function () {
             // Close other panels if needed (optional, keeping independent for now or strict accordion?)
             // Let's implement strict accordion (only one open at a time) for cleaner mobile view
-            
+
             /* Uncomment this block to allow only one panel open at a time
             for (let j = 0; j < acc.length; j++) {
                 if (acc[j] !== this && acc[j].classList.contains("active")) {
@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             this.classList.toggle("active");
             const panel = this.nextElementSibling;
-            
+
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
                 panel.classList.remove("open");
             } else {
                 panel.classList.add("open");
                 panel.style.maxHeight = panel.scrollHeight + "px";
-            } 
+            }
         });
     }
 
@@ -39,22 +39,59 @@ function moveSlide(button, direction) {
     const carousel = button.closest('.carousel');
     const track = carousel.querySelector('.carousel-track');
     const slides = Array.from(track.children);
-    
+
     // Find current slide
     const currentSlide = track.querySelector('.current-slide');
     const currentIndex = slides.indexOf(currentSlide);
-    
+
     let targetIndex = currentIndex + direction;
-    
+
     // Loop
     if (targetIndex < 0) {
         targetIndex = slides.length - 1;
     } else if (targetIndex >= slides.length) {
         targetIndex = 0;
     }
-    
+
     const targetSlide = slides[targetIndex];
-    
+
     currentSlide.classList.remove('current-slide');
     targetSlide.classList.add('current-slide');
 }
+
+// --- Lightbox / Modal Logic ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Get the modal
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    var span = document.getElementsByClassName("close")[0];
+
+    // Get all images in carousel slides and add click event
+    var images = document.querySelectorAll(".carousel-slide img");
+
+    images.forEach(img => {
+        img.style.cursor = "pointer";
+        img.addEventListener('click', function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            // captionText.innerHTML = this.alt; 
+        });
+    });
+
+    // Close on X
+    if (span) {
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    }
+
+    // Close on outside click
+    if (modal) {
+        modal.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+});
