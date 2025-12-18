@@ -60,33 +60,57 @@ function moveSlide(button, direction) {
 }
 
 // --- Lightbox / Modal Logic ---
+let modalImages = [];
+let currentModalIndex = 0;
+const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("img01");
+
+function openModal(index, imagesArray) {
+    modal.style.display = "block";
+    modalImages = imagesArray;
+    currentModalIndex = index;
+    modalImg.src = modalImages[currentModalIndex].src;
+}
+
+function changeModalImage(n) {
+    currentModalIndex += n;
+    if (currentModalIndex >= modalImages.length) {
+        currentModalIndex = 0;
+    } else if (currentModalIndex < 0) {
+        currentModalIndex = modalImages.length - 1;
+    }
+    modalImg.src = modalImages[currentModalIndex].src;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Get the modal
-    var modal = document.getElementById("imageModal");
-    var modalImg = document.getElementById("img01");
-    var captionText = document.getElementById("caption");
-    var span = document.getElementsByClassName("close")[0];
+    // Get all slides
+    var slides = document.querySelectorAll(".carousel-slide");
 
-    // Get all images in carousel slides and add click event
-    var images = document.querySelectorAll(".carousel-slide img");
+    slides.forEach(slide => {
+        let img = slide.querySelector('img');
+        if (img) {
+            img.style.cursor = "pointer";
+            img.addEventListener('click', function () {
+                // Find all images in THIS specific carousel
+                let carouselTrack = this.closest('.carousel-track');
+                let allImagesInCarousel = Array.from(carouselTrack.querySelectorAll('img'));
 
-    images.forEach(img => {
-        img.style.cursor = "pointer";
-        img.addEventListener('click', function () {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            // captionText.innerHTML = this.alt; 
-        });
+                // Get index of clicked image
+                let index = allImagesInCarousel.indexOf(this);
+
+                openModal(index, allImagesInCarousel);
+            });
+        }
     });
 
-    // Close on X
+    // Close buttons
+    var span = document.getElementsByClassName("close")[0];
     if (span) {
         span.onclick = function () {
             modal.style.display = "none";
         }
     }
 
-    // Close on outside click
     if (modal) {
         modal.onclick = function (event) {
             if (event.target === modal) {
