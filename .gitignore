@@ -1,0 +1,8 @@
+# Ignore batch scripts
+actualizar_repositorio.bat
+# system files
+thumbs.db
+desktop.ini
+
+# Ignore vscode settings
+.vscode/
