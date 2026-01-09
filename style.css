@@ -341,10 +341,34 @@ footer {
 }
 
 .footer-address {
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
     font-size: 0.9rem;
     opacity: 0.7;
     font-weight: 300;
+}
+
+.footer-credits {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.footer-credits p {
+    margin: 0;
+    color: var(--white);
+}
+
+.footer-credits a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px dotted rgba(255,255,255,0.5);
+    transition: all 0.3s;
+}
+
+.footer-credits a:hover {
+    color: #ffd700; /* Gold/yellow for a nice pop on blue */
+    border-bottom-color: #ffd700;
 }
 
 /* Mobile Tweaks */
